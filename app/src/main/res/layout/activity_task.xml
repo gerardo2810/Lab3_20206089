@@ -4,18 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F3EAF6"
     tools:context=".Task">
 
+    <!-- Header con flecha de regreso y botón de logout -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pomodoro PUCP"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/baseline_logout_24"
+            android:contentDescription="Cerrar sesión"/>
+    </androidx.appcompat.widget.Toolbar>
+
     <!-- Spinner que muestra las tareas del usuario -->
+    <TextView
+        android:id="@+id/tvTaskLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver tareas de Emily:"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <Spinner
         android:id="@+id/taskSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTaskLabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnChangeStatus"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Botón para cambiar el estado de la tarea -->
     <Button
@@ -23,8 +65,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Cambiar estado"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@color/white"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@id/taskSpinner"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
