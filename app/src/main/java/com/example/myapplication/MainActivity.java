@@ -59,11 +59,15 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
+
                     // Mostrar un mensaje de bienvenida
                     Toast.makeText(MainActivity.this, "Bienvenido " + loginResponse.getFirstName(), Toast.LENGTH_LONG).show();
 
-                    // Iniciar la nueva actividad PlayGameActivity
+                    // Iniciar la nueva actividad PlayGameActivity y pasar los datos del usuario
                     Intent intent = new Intent(MainActivity.this, PlayGame.class);
+                    intent.putExtra("userName", loginResponse.getFirstName() + " " + loginResponse.getLastName());
+                    intent.putExtra("userEmail", loginResponse.getEmail());
+                    intent.putExtra("gender", loginResponse.getGender());
                     startActivity(intent);
 
                     // Finalizar la actividad actual para que no se pueda regresar presionando 'atrás'
@@ -72,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Login fallido", Toast.LENGTH_SHORT).show();
                 }
             }
+
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
