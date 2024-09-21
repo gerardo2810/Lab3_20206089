@@ -9,7 +9,6 @@ public class TodoResponse implements Serializable {
     private boolean completed;
     private int userId;
 
-    // Getters y setters
 
     public int getId() {
         return id;

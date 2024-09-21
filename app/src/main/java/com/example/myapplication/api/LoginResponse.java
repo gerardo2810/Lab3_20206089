@@ -8,7 +8,6 @@ public class LoginResponse {
     private String lastName;
     private String gender;
 
-    // Getters
     public int getId() {
         return id;
     }
@@ -33,7 +32,6 @@ public class LoginResponse {
         return gender;
     }
 
-    // Setters
     public void setId(int id) {
         this.id = id;
     }

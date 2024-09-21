@@ -7,7 +7,6 @@
     android:background="#F3EAF6"
     tools:context=".PlayGame">
 
-    <!-- Header con título e ícono para logout -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -37,7 +36,6 @@
             android:contentDescription="Cerrar sesión"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Card con información del usuario -->
     <androidx.cardview.widget.CardView
         android:id="@+id/userInfoCard"
         android:layout_width="0dp"
@@ -56,7 +54,6 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- Ícono de género -->
             <ImageView
                 android:id="@+id/ivGenderIcon"
                 android:layout_width="40dp"
@@ -64,7 +61,6 @@
                 android:src="@drawable/baseline_male_24"
                 android:layout_marginEnd="16dp" />
 
-            <!-- Información del usuario -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,7 +85,6 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Temporizador -->
     <TextView
         android:id="@+id/tvBreakTime"
         android:layout_width="wrap_content"
@@ -114,7 +109,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Botón de iniciar/reiniciar -->
     <ImageView
         android:id="@+id/btnStartRestart"
         android:layout_width="wrap_content"

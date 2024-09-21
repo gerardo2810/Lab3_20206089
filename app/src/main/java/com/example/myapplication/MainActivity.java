@@ -25,11 +25,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Inicializar ViewBinding
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Configurar Retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://dummyjson.com")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -37,12 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
         apiService = retrofit.create(ApiService.class);
 
-        // Setear listener del botón de login
         binding.btnLogin.setOnClickListener(v -> loginUser());
     }
 
     private void loginUser() {
-        // Verificar si hay conexión a Internet
         if (!NetworkUtils.isConnected(this)) {
             Toast.makeText(this, "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
             return;
@@ -53,24 +49,20 @@ public class MainActivity extends AppCompatActivity {
 
         LoginRequest loginRequest = new LoginRequest(username, password);
 
-        // Llamar a la API de login
         apiService.loginUser(loginRequest).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
 
-                    // Mostrar un mensaje de bienvenida
                     Toast.makeText(MainActivity.this, "Bienvenido " + loginResponse.getFirstName(), Toast.LENGTH_LONG).show();
 
-                    // Iniciar la nueva actividad PlayGameActivity y pasar los datos del usuario
                     Intent intent = new Intent(MainActivity.this, PlayGame.class);
                     intent.putExtra("userName", loginResponse.getFirstName() + " " + loginResponse.getLastName());
                     intent.putExtra("userEmail", loginResponse.getEmail());
                     intent.putExtra("gender", loginResponse.getGender());
                     startActivity(intent);
 
-                    // Finalizar la actividad actual para que no se pueda regresar presionando 'atrás'
                     finish();
                 } else {
                     Toast.makeText(MainActivity.this, "Login fallido", Toast.LENGTH_SHORT).show();

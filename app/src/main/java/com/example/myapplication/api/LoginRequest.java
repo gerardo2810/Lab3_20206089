@@ -10,7 +10,6 @@ public class LoginRequest {
         this.password = password;
     }
 
-    // Getters
     public String getUsername() {
         return username;
     }

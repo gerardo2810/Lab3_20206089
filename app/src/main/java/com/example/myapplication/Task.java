@@ -28,17 +28,16 @@ public class Task extends AppCompatActivity {
 
     private Spinner taskSpinner;
     private Button changeStatusButton;
-    private ArrayList<TodoResponse> tasks; // Lista de tareas del usuario
+    private ArrayList<TodoResponse> tasks;
     private ArrayAdapter<String> spinnerAdapter;
-    private ImageView btnLogout; // Referencia al botón de logout
-    private ApiService apiService; // Referencia al servicio API
+    private ImageView btnLogout;
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
-        // Configurar Retrofit para hacer la solicitud PUT
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://dummyjson.com/") // Base URL
                 .addConverterFactory(GsonConverterFactory.create())
@@ -46,17 +45,14 @@ public class Task extends AppCompatActivity {
 
         apiService = retrofit.create(ApiService.class);
 
-        // Habilitar la flecha de regreso en la barra de acción
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         taskSpinner = findViewById(R.id.taskSpinner);
         changeStatusButton = findViewById(R.id.btnChangeStatus);
-        btnLogout = findViewById(R.id.btnLogout); // Referencia al botón de logout
+        btnLogout = findViewById(R.id.btnLogout);
 
-        // Obtener las tareas del Intent
         tasks = (ArrayList<TodoResponse>) getIntent().getSerializableExtra("tasks");
 
-        // Crear un adaptador para el Spinner con el formato "<nombre> - <Completado/No completado>"
         ArrayList<String> taskNames = new ArrayList<>();
         for (TodoResponse task : tasks) {
             String status = task.isCompleted() ? "Completado" : "No completado";
@@ -67,23 +63,19 @@ public class Task extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskSpinner.setAdapter(spinnerAdapter);
 
-        // Botón para cambiar el estado de la tarea seleccionada
         changeStatusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int selectedTaskIndex = taskSpinner.getSelectedItemPosition();
                 TodoResponse selectedTask = tasks.get(selectedTaskIndex);
 
-                // Cambiar el estado de completado
                 boolean newStatus = !selectedTask.isCompleted();
                 selectedTask.setCompleted(newStatus);
 
-                // Llamar a la API para actualizar el estado de la tarea (PUT request)
                 apiService.updateTodo(selectedTask.getId(), selectedTask).enqueue(new Callback<TodoResponse>() {
                     @Override
                     public void onResponse(Call<TodoResponse> call, Response<TodoResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            // Actualizar el Spinner con el nuevo estado
                             String status = newStatus ? "Completado" : "No completado";
                             taskNames.set(selectedTaskIndex, selectedTask.getTodo() + " - " + status);
                             spinnerAdapter.notifyDataSetChanged();
@@ -102,21 +94,16 @@ public class Task extends AppCompatActivity {
             }
         });
 
-        // Botón de logout: Cerrar sesión y volver a MainActivity
         btnLogout.setOnClickListener(v -> {
-            clearUserSession(); // Limpiar la sesión del usuario
 
-            // Volver a la pantalla de login (MainActivity)
             Intent logoutIntent = new Intent(Task.this, MainActivity.class);
             logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(logoutIntent);
 
-            // Finalizar la actividad actual
             finish();
         });
     }
 
-    // Método para limpiar la sesión del usuario usando SharedPreferences
     private void clearUserSession() {
         SharedPreferences preferences = getSharedPreferences("userSession", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -124,14 +111,12 @@ public class Task extends AppCompatActivity {
         editor.apply();
     }
 
-    // Manejar el botón de regreso en la barra de acción
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            // Volver a PlayGame cuando se presiona la flecha de regreso
             Intent intent = new Intent(Task.this, PlayGame.class);
             startActivity(intent);
-            finish(); // Finalizar la actividad actual
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

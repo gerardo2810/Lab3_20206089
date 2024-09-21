@@ -7,7 +7,6 @@
     android:background="#F3EAF6"
     tools:context=".Task">
 
-    <!-- Header con flecha de regreso y botón de logout -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -37,7 +36,6 @@
             android:contentDescription="Cerrar sesión"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Spinner que muestra las tareas del usuario -->
     <TextView
         android:id="@+id/tvTaskLabel"
         android:layout_width="wrap_content"
@@ -59,7 +57,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Botón para cambiar el estado de la tarea -->
     <Button
         android:id="@+id/btnChangeStatus"
         android:layout_width="0dp"
