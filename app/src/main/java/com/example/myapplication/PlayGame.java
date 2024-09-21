@@ -179,7 +179,7 @@ public class PlayGame extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<TodoResponse> tasks = response.body();
                     if (tasks.isEmpty()) {
-                        showNoTasksDialog();
+                        showNoTasksDialog(); // Mostrar un diálogo si no tiene tareas
                     } else {
                         // Abrir la actividad con las tareas si tiene al menos una tarea
                         Intent intent = new Intent(PlayGame.this, Task.class);
@@ -195,6 +195,7 @@ public class PlayGame extends AppCompatActivity {
             }
         });
     }
+
 
     // Mostrar un dialog si no tiene tareas
     private void showNoTasksDialog() {
